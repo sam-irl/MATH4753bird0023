@@ -7,9 +7,13 @@
 #' @return The probability P(x <= a)
 #' @export
 #'
+#' @importFrom graphics curve polygon
+#' @importFrom stats dnorm pnorm
+#'
 #' @examples
 #' \dontrun{myncurve(mu=0, sigma=1, a=0)}
 myncurve = function(mu, sigma, a) {
+  x <- NULL # global variable issue
   curve(dnorm(x, mean=mu, sd=sigma), xlim=c(mu-3*sigma, mu+3*sigma))
   xcurve <- seq(mu-3*sigma, a, length=1000)
   ycurve <- dnorm(xcurve, mean=mu, sd=sigma)

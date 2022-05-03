@@ -1,6 +1,3 @@
-library(dplyr)
-library(ggplot2)
-
 #' "My DDT" function
 #'
 #' Creates a ggplot of the fish SPECIES, length vs weight, coloured by river.
@@ -18,6 +15,10 @@ library(ggplot2)
 #'
 #' @return A LENGTH vs WEIGHT plot and a named list with the pre- and post-filtering data frame as well as a frequency table of rivers.
 #' @export
+#'
+#' @importFrom dplyr '%>%' filter
+#' @importFrom ggplot2 ggplot geom_point geom_smooth ggtitle aes_string
+#' @importFrom utils write.csv
 #'
 #' @examples
 #' \dontrun{myddt(df=ddt, SPECIES="CCATFISH")}

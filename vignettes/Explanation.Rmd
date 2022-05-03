@@ -1,0 +1,109 @@
+---
+title: "Sam Bird's Package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Sam Bird's Package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(MATH4753bird0023)
+```
+
+This package is a collection of functions that I have used over the course of the MATH 4753 course.
+
+# Data
+
+There are two data frames stored in this package.
+
+## fire
+
+The first is `fire`, which is about fire damage. It has 15 observations of fire damage. There are two variables, the distance in miles from a fire station and the amount of damage caused in thousands of dollars.
+
+```{r}
+head(fire)
+```
+
+## DDT
+
+The second is `DDT`, which is about DDT contamination in fish. There are six variables: the river the fish was caught in, the distance from the river mouth the fish was caught, the fish's species, the length of the fish in centimetres, the weight of the fish in grams, and the DDT in the fish in parts per million.
+
+```{r}
+head(ddt)
+```
+
+# Functions
+
+## Binomial distribution simulator
+
+This function graphs a binomial distribution, iterated a certain number of times, given the size and success probability of a binomial distribution. It illustrates what it means for a binomial distribution to have 'successes' and 'failures'.
+
+```{r}
+mybinomial(iter=10000, n=20, p=0.3)
+```
+
+## Confidence Interval Bootstrapping
+
+This function bootstraps a confidence interval, given a distribution, the confidence level (alpha), and a statistic to estimate. For example, a 95% confidence interval of the mean, given a normally distributed sample, is:
+
+```{r}
+sam <- rnorm(10, mean = 5, sd = 2)
+myboot(iter = 10000, sam, fun = "mean", alpha = 0.05)
+```
+
+## Central Limit Theorem (Poisson Distribution)
+
+This function demonstrates the central limit theorem by sampling a Poisson distribution a certain number of times and displaying a distribution of the sample means. By the central limit theorem, the distribution of these means will be approximately normal.
+
+```{r}
+par(mar=c(2,2,2,2))
+mycltp(n = 5, iter = 10000, lambda = 5)
+```
+
+## Get Working Directory
+
+The first function added to this package. Very simply returns the working directory.
+
+```{r}
+mygetwd()
+```
+
+## Maximum Likelihood Estimation
+
+Uses the method of maximum likelihood to estimate a parameter passed to the function. Requires a log likelihood function, a vector of prior outcomes, and the parameter that gets passed to the distribution (p, \(\lambda\), etc.)
+
+```{r}
+mymaxlik(function (x, param) log(dbinom(x, prob=param, size=20)), c(1,2,3,4), seq(0,1,length=1000))
+```
+
+## Normal Distribution Probability finder
+
+A visual representation of `pnorm`. For a normal distribution \(Y \sim N(\mu, \sigma)\), this function will give a visual representation of \(P(Y \leq a)\). Displays a graph and also returns the calculated value.
+
+```{r}
+myncurve(mu = 10, sigma = 2, a = 8)
+```
+
+## Scatter Histogram
+
+This function combines a histogram and a scatterplot.
+
+```{r}
+with(fire, scatterhist(x = DISTANCE, y = DAMAGE, xlab = "Distance (mi)", ylab = "Damage ($'000)"))
+```
+
+## DDT
+
+This creates a ggplot of length vs weight of a species in the DDT dataset, colour-coded by river.
+
+```{r}
+myddt(ddt, "CCATFISH")
+```
